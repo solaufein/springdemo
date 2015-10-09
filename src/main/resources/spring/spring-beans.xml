@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Some Other Bean Definitions and Configuration-->
+
+    <!-- Setter injection -->
+    <bean id="employee" class="com.springdemo.model.Employee" scope="prototype" init-method="init">
+        <property name="firstName" value="First"/>
+        <property name="lastName" value="Second"/>
+        <property name="secure" ref="secureRandom"/>
+    </bean>
+
+    <!-- Constructor injection -->
+    <bean id="employee2" class="com.springdemo.model.Employee">
+        <constructor-arg type="java.lang.String" value="Tom"/>
+        <constructor-arg type="java.lang.String" value="Cat"/>
+        <constructor-arg ref="secureRandom"/>
+    </bean>
+
+    <bean id="secureRandom" class="java.security.SecureRandom" scope="singleton">
+    </bean>
+
+    <!-- Application context aware bean -->
+    <bean id="appContext" class="com.springdemo.ApplicationContextBean"/>
+
+    <!--Task Executors -->
+    <bean id="threadConfiguredByXml" class="com.springdemo.logic.ThreadConfiguredByXml">
+        <constructor-arg type="org.springframework.core.task.TaskExecutor" ref="taskExecutor" />
+        <constructor-arg type="com.springdemo.logic.ClassWithMethodToFire" ref="classWithMethodToFireBean"/>
+    </bean>
+
+    <bean id="classWithMethodToFireBean" class="com.springdemo.logic.ClassWithMethodToFire"/>
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="queueCapacity" value="25" />
+    </bean>
+
+</beans>

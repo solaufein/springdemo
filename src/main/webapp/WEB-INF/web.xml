@@ -1,0 +1,66 @@
+<?xml  version="1.0"  encoding="UTF-8"?>
+
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <!-- Display -->
+    <display-name>Spring Demo</display-name>
+    <description>
+        Spring Demo
+    </description>
+
+    <!-- Creates the Spring Container shared by all Servlet and Filters -->
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <listener>
+        <listener-class>
+            org.springframework.security.web.session.HttpSessionEventPublisher
+        </listener-class>
+    </listener>
+
+    <!-- Creates Context Listener -->
+    <!--listener>
+        <listener-class>pl.radek.dvd.listener.Config</listener-class>
+    </listener-->
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/applicationContext.xml
+        </param-value>
+    </context-param>
+
+    <session-config>
+        <session-timeout>15</session-timeout>
+    </session-config>
+
+    <!-- Dispatcher Servlet -->
+    <servlet>
+        <servlet-name>springapp</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/applicationContext.xml
+                /WEB-INF/spring-security.xml
+            </param-value>
+        </init-param-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>springapp</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Welcome -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
